@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\GenreRequest;
+use App\Models\Genre;
+use Illuminate\Support\Facades\Lang;
 
 class GenreController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,9 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
+        $info_delete = Lang::get('message.info_delete');
+        $genres = Genre::all()->sortBy('name');
+        return view('genres.home', compact('genres','info_delete'));
     }
 
     /**
@@ -23,7 +32,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        return view('directors.create');
     }
 
     /**
@@ -32,9 +41,11 @@ class GenreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GenreRequest $request)
     {
-        //
+        Genre::create($request->validated());
+        $message = Lang::get('message.success_create');
+        return redirect('/genres')->with('success', $message);
     }
 
     /**
@@ -43,9 +54,10 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Genre $genre)
     {
-        //
+        $info_delete = Lang::get('message.info_delete');
+        return view('genres.show', compact('genre','info_delete'));
     }
 
     /**
@@ -54,9 +66,13 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Genre $genre)
     {
-        //
+        if ($genre == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/genres')->with('error', $message);
+        }
+        return view('genres.edit', compact('genre'));
     }
 
     /**
@@ -66,9 +82,16 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GenreRequest $request, Genre $genre)
     {
-        //
+        if ($genre == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/genres')->with('error', $message);
+        }
+        $validated = $request->validated();
+        $genre->fill($validated)->save();
+        $message = Lang::get('message.success_edit');
+        return redirect('/genres')->with('success', $message);
     }
 
     /**
@@ -77,8 +100,17 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Genre $genre)
     {
-        //
+        if ($genre == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/genres')->with('error', $message);
+        } else if ($genre->videos()->count() > 0) {
+            $message = Lang::get('message.error_delete');
+            return redirect('/genres')->with('error', $message);
+        }
+        $genre->delete();
+        $message = Lang::get('message.success_delete');
+        return redirect('/genres')->with('success', $message);
     }
 }

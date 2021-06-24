@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StarRequest;
+use App\Models\Star;
+use Illuminate\Support\Facades\Lang;
 
 class StarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,9 @@ class StarController extends Controller
      */
     public function index()
     {
-        //
+        $info_delete = Lang::get('message.info_delete');
+        $stars = Star::all()->sortBy('name');
+        return view('stars.home', compact('stars','info_delete'));
     }
 
     /**
@@ -23,7 +32,7 @@ class StarController extends Controller
      */
     public function create()
     {
-        //
+        return view('stars.create');
     }
 
     /**
@@ -32,9 +41,11 @@ class StarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StarRequest $request)
     {
-        //
+        Star::create($request->validated());
+        $message = Lang::get('message.success_create');
+        return redirect('/stars')->with('success', $message);
     }
 
     /**
@@ -43,9 +54,10 @@ class StarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Star $star)
     {
-        //
+        $info_delete = Lang::get('message.info_delete');
+        return view('stars.show', compact('star','info_delete'));
     }
 
     /**
@@ -54,9 +66,13 @@ class StarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Star $star)
     {
-        //
+        if ($star == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/stars')->with('error', $message);
+        }
+        return view('stars.edit', compact('star'));
     }
 
     /**
@@ -66,9 +82,16 @@ class StarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StarRequest $request, Star $star)
     {
-        //
+        if ($star == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/stars')->with('error', $message);
+        }
+        $validated = $request->validated();
+        $star->fill($validated)->save();
+        $message = Lang::get('message.success_edit');
+        return redirect('/stars')->with('success', $message);
     }
 
     /**
@@ -77,8 +100,17 @@ class StarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Star $star)
     {
-        //
+        if ($star == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/stars')->with('error', $message);
+        } else if ($star->videos()->count() > 0) {
+            $message = Lang::get('message.error_delete');
+            return redirect('/stars')->with('error', $message);
+        }
+        $star->delete();
+        $message = Lang::get('message.success_delete');
+        return redirect('/stars')->with('success', $message);
     }
 }
