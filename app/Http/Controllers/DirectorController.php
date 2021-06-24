@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DirectorRequest;
 use App\Models\Director;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 
 class DirectorController extends Controller
@@ -41,7 +41,7 @@ class DirectorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DirectorRequest $request)
     {
         Director::create($request->validated());
         $message = Lang::get('message.success_create');
@@ -54,10 +54,9 @@ class DirectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Director $director)
     {
         $info_delete = Lang::get('message.info_delete');
-        $director = Director::find($id);
         return view('directors.show', compact('director','info_delete'));
     }
 
@@ -67,14 +66,13 @@ class DirectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Director $director)
     {
-        $director = Director::find($id);
         if ($director == null) {
             $message = Lang::get('message.error_undefined');
-            return redirect('/authors')->with('error', $message);
+            return redirect('/directors')->with('error', $message);
         }
-        return view('authors.update', compact('author'));
+        return view('directors.edit', compact('director'));
     }
 
     /**
@@ -84,17 +82,16 @@ class DirectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(DirectorRequest $request, Director $director)
     {
-        $director = Director::find($id);
         if ($director == null) {
             $message = Lang::get('message.error_undefined');
-            return redirect('/authors')->with('error', $message);
+            return redirect('/directors')->with('error', $message);
         }
         $validated = $request->validated();
         $director->fill($validated)->save();
         $message = Lang::get('message.success_edit');
-        return redirect('/authors')->with('success', $message);
+        return redirect('/directors')->with('success', $message);
     }
 
     /**
@@ -103,13 +100,12 @@ class DirectorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Director $director)
     {
-        $director = Director::find($id);
         if ($director == null) {
             $message = Lang::get('message.error_undefined');
             return redirect('/directors')->with('error', $message);
-        } else if ($director->books()->count() > 0) {
+        } else if ($director->videos()->count() > 0) {
             $message = Lang::get('message.error_delete');
             return redirect('/directors')->with('error', $message);
         }
