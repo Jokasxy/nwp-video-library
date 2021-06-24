@@ -12,6 +12,7 @@ class Video extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
         'director_id',
     ];
 

@@ -18,9 +18,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             AdminSeeder::class,
+            UserSeeder::class,
             GenresSeeder::class,
             DirectorsSeeder::class,
             StarsSeeder::class,
+            VideosSeeder::class,
+            VideosIntermediateSeeder::class,
         ]);
     }
 }

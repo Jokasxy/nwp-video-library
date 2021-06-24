@@ -17,6 +17,7 @@ class CreateVideosTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('image');
             $table->foreignId('director_id');
 
             $table->foreign('director_id')->references('id')->on('directors')->onUpdate('cascade')->onDelete('cascade');

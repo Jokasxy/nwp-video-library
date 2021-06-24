@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\StarController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,3 +57,14 @@ Route::group(['prefix' => '/stars', 'middleware' => 'can:modify'], function () {
 
 Route::get('/stars', [StarController::class, 'index'])->name('stars.index');
 Route::get('/stars/{star}', [StarController::class, 'show'])->name('stars.show');
+
+Route::group(['prefix' => '/videos', 'middleware' => 'can:modify'], function () {
+    Route::get('/create', [VideoController::class, 'create'])->name('videos.create');
+    Route::post('/store', [VideoController::class, 'store'])->name('videos.store');
+    Route::get('/edit/{video}', [VideoController::class, 'edit'])->name('videos.edit');
+    Route::put('/update/{video}', [VideoController::class, 'update'])->name('videos.update');
+    Route::delete('/destroy/{video}', [VideoController::class, 'destroy'])->name('videos.destroy');
+});
+
+Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
+Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');

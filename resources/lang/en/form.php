@@ -27,4 +27,18 @@ return [
     'star_add' => 'Add Star',
     'star_edit' => 'Edit Star',
     'star_name' => 'Star Name',
+
+    'video_title' => 'Videos',
+    'video_create' => 'Create Video',
+    'video_empty' => 'No Videos',
+    'video_add' => 'Add Video',
+    'video_edit' => 'Edit Video',
+    'video_name' => 'Video Name',
+    'video_description' => 'Video description',
+    'video_image' => 'Video Image',
+    'video_director' => 'Video Director',
+    'video_stars' => 'Stars:',
+    'video_no_stars' => 'No stars',
+    'video_genres' => 'Genres:',
+    'video_no_genres' => 'No genres',
 ];

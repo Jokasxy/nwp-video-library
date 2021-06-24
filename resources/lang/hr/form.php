@@ -27,4 +27,18 @@ return [
     'star_add' => 'Dodaj glavnog glumca',
     'star_edit' => 'Uredi glavnog glumca',
     'star_name' => 'Ime glavnog glumca',
+
+    'video_title' => 'Videji',
+    'video_create' => 'Izradi video',
+    'video_empty' => 'Nema videa',
+    'video_add' => 'Dodaj video',
+    'video_edit' => 'Uredi video',
+    'video_name' => 'Ime videa',
+    'video_description' => 'Opis videa',
+    'video_image' => 'Slika videa',
+    'video_director' => 'Redatelj videa',
+    'video_stars' => 'Glavni glumci:',
+    'video_no_stars' => 'Nema Glavnih glumaca',
+    'video_genres' => 'Žanr:',
+    'video_no_genres' => 'Nema žanrova',
 ];
