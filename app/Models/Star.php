@@ -13,6 +13,8 @@ class Star extends Model
         'name',
     ];
 
+    public $timestamps = false;
+
     public function videos () {
         return $this->belongsToMany(Video::class, 'videos_stars');
     }

@@ -20,3 +20,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+Route::get('/directors', [App\Http\Controllers\DirectorController::class, 'index'])->name('directors');
+Route::get('/directors/show/{id}', [App\Http\Controllers\DirectorController::class, 'index'])->name('directors');
+
+Route::group(['prefix' => 'directors', 'middleware' => '[can:modify]', 'as' => 'directors.'], function () {
+    Route::get('/create', [\App\Http\Controllers\DirectorController::class, 'create']);
+    Route::post('/store', [\App\Http\Controllers\DirectorController::class, 'store']);
+    Route::get('/edit/{id}', [\App\Http\Controllers\DirectorController::class, 'update']);
+    Route::put('/update/{id}', [\App\Http\Controllers\DirectorController::class, 'edit']);
+    Route::delete('/destroy/{id}', [\App\Http\Controllers\DirectorController::class, 'destroy']);
+});

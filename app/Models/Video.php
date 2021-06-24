@@ -15,6 +15,8 @@ class Video extends Model
         'director_id',
     ];
 
+    public $timestamps = false;
+
     public function genres() {
         return $this->belongsToMany(Genre::class, 'videos_genres');
     }

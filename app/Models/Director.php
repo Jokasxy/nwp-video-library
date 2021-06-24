@@ -13,6 +13,8 @@ class Director extends Model
         'name',
     ];
 
+    public $timestamps = false;
+
     public function videos () {
         return $this->hasMany(Video::class);
     }
