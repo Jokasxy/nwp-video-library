@@ -31,5 +31,24 @@ class VideosIntermediateSeeder extends Seeder
             'video_id' => 1,
             'genre_id' => 2,
         ]);
+
+
+        DB::table('videos_stars')->insert([
+            'video_id' => 2,
+            'star_id' => 3,
+        ]);
+        DB::table('videos_stars')->insert([
+            'video_id' => 2,
+            'star_id' => 4,
+        ]);
+
+        DB::table('videos_genres')->insert([
+            'video_id' => 2,
+            'genre_id' => 3,
+        ]);
+        DB::table('videos_genres')->insert([
+            'video_id' => 2,
+            'genre_id' => 4,
+        ]);
     }
 }

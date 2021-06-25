@@ -29,4 +29,8 @@ class Video extends Model
     public function stars() {
         return $this->belongsToMany(Star::class, 'videos_stars');
     }
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'users_videos');
+    }
 }

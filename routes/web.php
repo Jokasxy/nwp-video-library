@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\StarController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 
 /*
@@ -68,3 +69,5 @@ Route::group(['prefix' => '/videos', 'middleware' => 'can:modify'], function () 
 
 Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
 Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');
+
+Route::get('/profile', [UserController::class, 'profile'])->middleware('can:borrow')->name('users.profile');

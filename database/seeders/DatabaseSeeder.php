@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             StarsSeeder::class,
             VideosSeeder::class,
             VideosIntermediateSeeder::class,
+            UsersVideosSeeder::class,
         ]);
     }
 }

@@ -14,11 +14,6 @@
 </div>
 @endif
 <div class="container videos">
-    <div class="col-md-10" style="margin-left:10px;display: flex; justify-content: flex-end">
-        @can('modify')
-        <a class="btn btn-small btn-primary btn-add" style="margin-bottom: 10px;" href="{{ url('/videos/create') }}">{{ __('form.video_create') }}</a>
-        @endcan
-    </div>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -29,7 +24,9 @@
                     <thead>
                         <tr>
                             <th style="text-align:center">{{ __('form.video_name') }}</th>
+                            @can('modify')
                             <th style="text-align:center">{{ __('form.action') }}</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -67,15 +64,6 @@
                                     <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.delete') }}" onClick="return confirm('{{$info_delete}}')">
                                 </form>
                             </td>
-                            @elsecan('borrow')
-                            {{--  <td style="text-align:center;">
-                                <form method="POST" action="/videos/borrow/{{$video->id}}" style="display: inline-block">
-                                    {{ csrf_field() }}
-                                    {{ method_field('POST') }}
-
-                                    <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.borrow') }}" onClick="return confirm('{{$info_borrow}}')">
-                                </form>
-                            </td>  --}}
                             @endcan
                         </tr>
                         @empty

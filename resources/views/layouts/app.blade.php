@@ -45,6 +45,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/genres') }}">{{ __('Genres') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/profile') }}">{{ __('Profile') }}</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

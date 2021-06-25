@@ -20,5 +20,12 @@ class VideosSeeder extends Seeder
             'image' => 'https://www.infoplease.com/sites/infoplease.com/files/styles/scale600w/public/2020-11/hollywood.jpg?itok=csD1kUA-',
             'director_id' => 1,
         ]);
+
+        Video::create([
+            'name' => 'Some Movie',
+            'description' => 'Something is happening in the movie.',
+            'image' => 'https://www.infoplease.com/sites/infoplease.com/files/styles/scale600w/public/2020-11/hollywood.jpg?itok=csD1kUA-',
+            'director_id' => 2,
+        ]);
     }
 }
