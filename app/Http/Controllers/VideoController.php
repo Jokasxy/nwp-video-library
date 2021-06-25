@@ -6,7 +6,9 @@ use App\Http\Requests\VideoRequest;
 use App\Models\Director;
 use App\Models\Genre;
 use App\Models\Star;
+use App\Models\User;
 use App\Models\Video;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 
@@ -25,8 +27,9 @@ class VideoController extends Controller
     public function index()
     {
         $info_delete = Lang::get('message.info_delete');
+        $info_borrow = Lang::get('message.info_borrow');
         $videos = Video::all()->sortBy('name');
-        return view('videos.home', compact('videos','info_delete'));
+        return view('videos.home', compact('videos', 'info_delete', 'info_borrow'));
     }
 
     /**
@@ -81,7 +84,8 @@ class VideoController extends Controller
     public function show(Video $video)
     {
         $info_delete = Lang::get('message.info_delete');
-        return view('videos.show', compact('video','info_delete'));
+        $info_borrow = Lang::get('message.info_borrow');
+        return view('videos.show', compact('video', 'info_delete', 'info_borrow'));
     }
 
     /**
@@ -156,6 +160,29 @@ class VideoController extends Controller
         }
         $video->delete();
         $message = Lang::get('message.success_delete');
+        return redirect('/videos')->with('success', $message);
+    }
+
+    public function borrow(Video $video) {
+        if ($video == null) {
+            $message = Lang::get('message.error_undefined');
+            return redirect('/videos')->with('error', $message);
+        }
+
+        $user_id = Auth::id();
+        $video_ids = User::find($user_id)->videos()->get()->pluck('id')->toArray();
+
+        if(in_array($video->id, $video_ids)) {
+            DB::table('users_videos')->where('user_id', $user_id)->where('video_id', $video->id)->delete();
+        }
+        else {
+            DB::table('users_videos')->insert([
+                'user_id' => $user_id,
+                'video_id' => $video->id,
+            ]);
+        }
+
+        $message = Lang::get('message.success_borrow');
         return redirect('/videos')->with('success', $message);
     }
 }

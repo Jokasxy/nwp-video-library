@@ -6,6 +6,7 @@ return [
     'back' => 'Back',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'borrow' => 'Borrow',
 
     'director_title' => 'Directors',
     'director_create' => 'Create Director',

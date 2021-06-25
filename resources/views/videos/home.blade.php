@@ -68,14 +68,14 @@
                                 </form>
                             </td>
                             @elsecan('borrow')
-                            {{--  <td style="text-align:center;">
+                            <td style="text-align:center;">
                                 <form method="POST" action="/videos/borrow/{{$video->id}}" style="display: inline-block">
                                     {{ csrf_field() }}
                                     {{ method_field('POST') }}
 
                                     <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.borrow') }}" onClick="return confirm('{{$info_borrow}}')">
                                 </form>
-                            </td>  --}}
+                            </td>
                             @endcan
                         </tr>
                         @empty

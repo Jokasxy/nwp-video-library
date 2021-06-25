@@ -69,5 +69,6 @@ Route::group(['prefix' => '/videos', 'middleware' => 'can:modify'], function () 
 
 Route::get('/videos', [VideoController::class, 'index'])->name('videos.index');
 Route::get('/videos/{video}', [VideoController::class, 'show'])->name('videos.show');
+Route::post('/videos/borrow/{video}', [VideoController::class, 'borrow'])->middleware('can:borrow')->name('videos.borrow');
 
 Route::get('/profile', [UserController::class, 'profile'])->middleware('can:borrow')->name('users.profile');
