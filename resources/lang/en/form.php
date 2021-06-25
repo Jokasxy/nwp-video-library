@@ -37,8 +37,8 @@ return [
     'video_description' => 'Video description',
     'video_image' => 'Video Image',
     'video_director' => 'Video Director',
-    'video_stars' => 'Stars:',
+    'video_stars' => 'Stars',
+    'video_genres' => 'Genres',
     'video_no_stars' => 'No stars',
-    'video_genres' => 'Genres:',
     'video_no_genres' => 'No genres',
 ];

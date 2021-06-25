@@ -28,6 +28,8 @@ class VideoRequest extends FormRequest
             'description' => 'required',
             'image' => 'required|url',
             'director_id' => 'required|exists:directors,id',
+            'star_ids' => 'required|array',
+            'genre_ids' => 'required|array',
         ];
     }
 
@@ -45,6 +47,10 @@ class VideoRequest extends FormRequest
             'image_url.url' => 'Invalid url format',
             'director_id.required' => 'Field is required',
             'director_id.exists' => 'Director id does not exist',
+            'star_ids.required' => 'Field is required',
+            'star_ids.array' => 'Field is not array',
+            'genre_ids.required' => 'Field is required',
+            'genre_ids.array' => 'Field is not array',
         ];
     }
 }

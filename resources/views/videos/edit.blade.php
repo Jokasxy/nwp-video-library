@@ -28,8 +28,7 @@
                             <span class="text-danger">{{ $errors->first('image') }}</span>
                             @endif
                             <label>{{ __('form.video_director') }}</label>
-
-                            <select name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}" value="<?php echo $video->director_id; ?>">
+                            <select name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}">
                             @foreach ($directors as $director)
                                 <option value="{{$director->id}}" {{ $video->director_id === $director->id ? 'selected' : '' }}>
                                     {{$director->name}}
@@ -38,6 +37,28 @@
                             </select>
                             @if ($errors->has('director_id'))
                             <span class="text-danger">{{ $errors->first('director_id') }}</span>
+                            @endif
+                            <label>{{ __('form.video_stars') }}</label>
+                            <select multiple name="star_ids[]" class="form-control {{ $errors->has('star_ids') ? 'has-error' : '' }}">
+                            @foreach ($stars as $star)
+                                <option value="{{$star->id}}" {{ in_array($star->id, $video->stars->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                    {{$star->name}}
+                                </option>
+                            @endforeach
+                            </select>
+                            @if ($errors->has('star_ids'))
+                            <span class="text-danger">{{ $errors->first('star_ids') }}</span>
+                            @endif
+                            <label>{{ __('form.video_genres') }}</label>
+                            <select multiple name="genre_ids[]" class="form-control {{ $errors->has('genre_ids') ? 'has-error' : '' }}">
+                            @foreach ($genres as $genre)
+                                <option value="{{$genre->id}}" {{ in_array($genre->id, $video->genres->pluck('id')->toArray()) ? 'selected' : '' }}>
+                                    {{$genre->name}}
+                                </option>
+                            @endforeach
+                            </select>
+                            @if ($errors->has('genre_ids'))
+                            <span class="text-danger">{{ $errors->first('genre_ids') }}</span>
                             @endif
                         </div>
                     </div>

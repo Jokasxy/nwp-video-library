@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VideoRequest;
 use App\Models\Director;
+use App\Models\Genre;
+use App\Models\Star;
 use App\Models\Video;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 
 class VideoController extends Controller
@@ -34,8 +37,10 @@ class VideoController extends Controller
     public function create()
     {
         $directors = Director::all()->sortBy('name');
+        $stars = Star::all()->sortBy('name');
+        $genres = Genre::all()->sortBy('name');
 
-        return view('videos.create', compact('directors'));
+        return view('videos.create', compact('directors', 'stars', 'genres'));
     }
 
     /**
@@ -46,8 +51,24 @@ class VideoController extends Controller
      */
     public function store(VideoRequest $request)
     {
-        Video::create($request->validated());
+        $video = Video::create($request->validated());
         $message = Lang::get('message.success_create');
+
+        $star_ids = $request->input('star_ids');
+        $genre_ids = $request->input('genre_ids');
+        foreach ($star_ids as $star_id) {
+            DB::table('videos_stars')->insert([
+                'video_id' => $video->id,
+                'star_id' => $star_id,
+            ]);
+        }
+        foreach ($genre_ids as $genre_id) {
+            DB::table('videos_genres')->insert([
+                'video_id' => $video->id,
+                'genre_id' => $genre_id,
+            ]);
+        }
+
         return redirect('/videos')->with('success', $message);
     }
 
@@ -76,8 +97,10 @@ class VideoController extends Controller
             return redirect('/videos')->with('error', $message);
         }
         $directors = Director::all()->sortBy('name');
+        $stars = Star::all()->sortBy('name');
+        $genres = Genre::all()->sortBy('name');
 
-        return view('videos.edit', compact('video', 'directors'));
+        return view('videos.edit', compact('video', 'directors', 'stars', 'genres'));
     }
 
     /**
@@ -95,6 +118,26 @@ class VideoController extends Controller
         }
         $validated = $request->validated();
         $video->fill($validated)->save();
+
+        $star_ids = $request->input('star_ids');
+        $genre_ids = $request->input('genre_ids');
+
+        DB::table('videos_stars')->where('video_id', $video->id)->delete();
+        DB::table('videos_genres')->where('video_id', $video->id)->delete();
+
+        foreach ($star_ids as $star_id) {
+                DB::table('videos_stars')->insert([
+                    'video_id' => $video->id,
+                    'star_id' => $star_id,
+                ]);
+        }
+        foreach ($genre_ids as $genre_id) {
+                DB::table('videos_genres')->insert([
+                    'video_id' => $video->id,
+                    'genre_id' => $genre_id,
+                ]);
+        }
+
         $message = Lang::get('message.success_edit');
         return redirect('/videos')->with('success', $message);
     }
@@ -109,9 +152,6 @@ class VideoController extends Controller
     {
         if ($video == null) {
             $message = Lang::get('message.error_undefined');
-            return redirect('/videos')->with('error', $message);
-        } else if ($video->videos()->count() > 0) {
-            $message = Lang::get('message.error_delete');
             return redirect('/videos')->with('error', $message);
         }
         $video->delete();

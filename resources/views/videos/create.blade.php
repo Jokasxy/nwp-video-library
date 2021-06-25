@@ -16,7 +16,7 @@
                             @if ($errors->has('name'))
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
-                            <label>{{ __('form.video_image') }}</label>
+                            <label>{{ __('form.video_description') }}</label>
                             <input type="text" name="description" class="form-control {{ $errors->has('description') ? 'has-error' : '' }}" value="{{ old('description') }}">
                             @if ($errors->has('description'))
                             <span class="text-danger">{{ $errors->first('description') }}</span>
@@ -30,6 +30,18 @@
                             <select name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}" value="{{ old('director_id') }}" >
                             @foreach ($directors as $director)
                                 <option value="{{$director->id}}">{{$director->name}}</option>
+                            @endforeach
+                            </select>
+                            <label>{{ __('form.video_stars') }}</label>
+                            <select multiple name="star_ids[]" class="form-control {{ $errors->has('star_ids') ? 'has-error' : '' }}" value="{{ old('star_ids') }}" >
+                            @foreach ($stars as $star)
+                                <option value="{{$star->id}}">{{$star->name}}</option>
+                            @endforeach
+                            </select>
+                            <label>{{ __('form.video_genres') }}</label>
+                            <select multiple name="genre_ids[]" class="form-control {{ $errors->has('genre_ids') ? 'has-error' : '' }}" value="{{ old('genre_ids') }}" >
+                            @foreach ($genres as $genre)
+                                <option value="{{$genre->id}}">{{$genre->name}}</option>
                             @endforeach
                             </select>
                         </div>
