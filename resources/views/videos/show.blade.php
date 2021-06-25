@@ -24,9 +24,7 @@
                     <thead>
                         <tr>
                             <th style="text-align:center">{{ __('form.video_name') }}</th>
-                            @can('modify')
                             <th style="text-align:center">{{ __('form.action') }}</th>
-                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +59,15 @@
                                     {{ method_field('DELETE') }}
 
                                     <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.delete') }}" onClick="return confirm('{{$info_delete}}')">
+                                </form>
+                            </td>
+                            @elsecan('borrow')
+                            <td style="text-align:center;">
+                                <form method="POST" action="/videos/borrow/{{$video->id}}" style="display: inline-block">
+                                    {{ csrf_field() }}
+                                    {{ method_field('POST') }}
+
+                                    <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.borrow') }}" onClick="return confirm('{{$info_borrow}}')">
                                 </form>
                             </td>
                             @endcan
