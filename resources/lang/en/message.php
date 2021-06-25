@@ -7,4 +7,5 @@ return [
     'error_delete' => 'Cannot delete record.',
     'info_delete' => 'Are you sure you wish to delete this record?',
     'info_borrow' => 'Are you sure you wish to borrow this item?',
+    'info_return' => 'Are you sure you wish to return this item?',
 ];

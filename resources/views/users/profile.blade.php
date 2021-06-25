@@ -58,7 +58,7 @@
                                     {{ csrf_field() }}
                                     {{ method_field('POST') }}
 
-                                    <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.borrow') }}" onClick="return confirm('{{$info_borrow}}')">
+                                    <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.return') }}" onClick="return confirm('{{$info_return}}')">
                                 </form>
                             </td>
                             @endcan

@@ -26,10 +26,16 @@ class VideoController extends Controller
      */
     public function index()
     {
+        $id = Auth::id();
+        $user = User::find($id);
+
+        $video_ids = $user->videos()->get()->pluck('id')->toArray();
+
         $info_delete = Lang::get('message.info_delete');
         $info_borrow = Lang::get('message.info_borrow');
+        $info_return = Lang::get('message.info_return');
         $videos = Video::all()->sortBy('name');
-        return view('videos.home', compact('videos', 'info_delete', 'info_borrow'));
+        return view('videos.home', compact('videos', 'info_delete', 'info_borrow', 'user', 'info_return', 'video_ids'));
     }
 
     /**
@@ -83,9 +89,15 @@ class VideoController extends Controller
      */
     public function show(Video $video)
     {
+        $id = Auth::id();
+        $user = User::find($id);
+
+        $video_ids = $user->videos()->get()->pluck('id')->toArray();
+
         $info_delete = Lang::get('message.info_delete');
         $info_borrow = Lang::get('message.info_borrow');
-        return view('videos.show', compact('video', 'info_delete', 'info_borrow'));
+        $info_return = Lang::get('message.info_return');
+        return view('videos.show', compact('video', 'info_delete', 'info_borrow', 'info_return', 'user', 'video_ids'));
     }
 
     /**

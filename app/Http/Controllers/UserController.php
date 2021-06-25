@@ -24,9 +24,9 @@ class UserController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $videos = $user->videos()->get();
-        $info_borrow = Lang::get('message.info_borrow');
+        $info_return = Lang::get('message.info_return');
 
-        return view('users.profile', compact('user', 'videos', 'info_borrow'));
+        return view('users.profile', compact('user', 'videos', 'info_return'));
     }
 
 }

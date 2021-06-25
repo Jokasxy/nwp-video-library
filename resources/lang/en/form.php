@@ -7,6 +7,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'borrow' => 'Borrow',
+    'return' => 'Return',
 
     'director_title' => 'Directors',
     'director_create' => 'Create Director',

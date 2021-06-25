@@ -7,6 +7,7 @@ return [
     'edit' => 'Uredi',
     'delete' => 'Obriši',
     'borrow' => 'Posudi',
+    'return' => 'Vrati',
 
     'director_title' => 'Redatelji',
     'director_create' => 'Dodaj novog redatelja',
