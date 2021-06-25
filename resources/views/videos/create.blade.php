@@ -27,10 +27,11 @@
                             <span class="text-danger">{{ $errors->first('image') }}</span>
                             @endif
                             <label>{{ __('form.video_director') }}</label>
-                            <input type="number" min="1" name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}" value="{{ old('director_id') }}">
-                            @if ($errors->has('director_id'))
-                            <span class="text-danger">{{ $errors->first('director_id') }}</span>
-                            @endif
+                            <select name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}" value="{{ old('director_id') }}" >
+                            @foreach ($directors as $director)
+                                <option value="{{$director->id}}">{{$director->name}}</option>
+                            @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

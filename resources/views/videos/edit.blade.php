@@ -28,7 +28,14 @@
                             <span class="text-danger">{{ $errors->first('image') }}</span>
                             @endif
                             <label>{{ __('form.video_director') }}</label>
-                            <input type="number" min="1" name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}" value="<?php echo $video->director_id; ?>">
+
+                            <select name="director_id" class="form-control {{ $errors->has('director_id') ? 'has-error' : '' }}" value="<?php echo $video->director_id; ?>">
+                            @foreach ($directors as $director)
+                                <option value="{{$director->id}}" {{ $video->director_id === $director->id ? 'selected' : '' }}>
+                                    {{$director->name}}
+                                </option>
+                            @endforeach
+                            </select>
                             @if ($errors->has('director_id'))
                             <span class="text-danger">{{ $errors->first('director_id') }}</span>
                             @endif

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\VideoRequest;
+use App\Models\Director;
 use App\Models\Video;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 
 class VideoController extends Controller
@@ -33,7 +33,9 @@ class VideoController extends Controller
      */
     public function create()
     {
-        return view('videos.create');
+        $directors = Director::all()->sortBy('name');
+
+        return view('videos.create', compact('directors'));
     }
 
     /**
@@ -73,7 +75,9 @@ class VideoController extends Controller
             $message = Lang::get('message.error_undefined');
             return redirect('/videos')->with('error', $message);
         }
-        return view('videos.edit', compact('video'));
+        $directors = Director::all()->sortBy('name');
+
+        return view('videos.edit', compact('video', 'directors'));
     }
 
     /**
