@@ -67,7 +67,7 @@
                                     {{ csrf_field() }}
                                     {{ method_field('POST') }}
 
-                                    <input type="submit" class="btn btn-small btn-danger" value="{{ in_array($video->id, $video_ids) ? __('form.return') : __('form.borrow') }}" onClick="return confirm('{{in_array($video->id, $video_ids) ? $info_return : $info_borrow}}')">
+                                    <input type="submit" class="btn btn-small {{ in_array($video->id, $video_ids) ? 'btn-danger' : 'btn-info' }}" value="{{ in_array($video->id, $video_ids) ? __('form.return') : __('form.borrow') }}" onClick="return confirm('{{in_array($video->id, $video_ids) ? $info_return : $info_borrow}}')">
                                 </form>
                             </td>
                             @endcan
