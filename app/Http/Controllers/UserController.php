@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 
 class UserController extends Controller
 {
@@ -23,8 +24,9 @@ class UserController extends Controller
         $id = Auth::id();
         $user = User::find($id);
         $videos = $user->videos()->get();
+        $info_borrow = Lang::get('message.info_borrow');
 
-        return view('users.profile', compact('user', 'videos'));
+        return view('users.profile', compact('user', 'videos', 'info_borrow'));
     }
 
 }

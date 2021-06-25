@@ -24,9 +24,7 @@
                     <thead>
                         <tr>
                             <th style="text-align:center">{{ __('form.video_name') }}</th>
-                            @can('modify')
                             <th style="text-align:center">{{ __('form.action') }}</th>
-                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -54,14 +52,13 @@
                                     @endforelse
                                 </ul>
                             </td>
-                            @can('modify')
+                            @can('borrow')
                             <td style="text-align:center;">
-                                <a class="btn btn-small btn-info" href="{{ url('videos/edit/' . $video->id) }}">{{ __('form.edit') }}</a>
-                                <form method="POST" action="/videos/destroy/{{$video->id}}" style="display: inline-block">
+                                <form method="POST" action="/videos/borrow/{{$video->id}}" style="display: inline-block">
                                     {{ csrf_field() }}
-                                    {{ method_field('DELETE') }}
+                                    {{ method_field('POST') }}
 
-                                    <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.delete') }}" onClick="return confirm('{{$info_delete}}')">
+                                    <input type="submit" class="btn btn-small btn-danger" value="{{ __('form.borrow') }}" onClick="return confirm('{{$info_borrow}}')">
                                 </form>
                             </td>
                             @endcan

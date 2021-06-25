@@ -45,9 +45,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/genres') }}">{{ __('Genres') }}</a>
                         </li>
+                        @can('borrow')
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/profile') }}">{{ __('Profile') }}</a>
                         </li>
+                        @endcan
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
